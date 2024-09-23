@@ -58,5 +58,8 @@ A simple way to get started is simply to try out and follow the example code
 - get reference frame
   > getRefFrame()
 
+- change reference frame
+  > setRefFrame(ref_frame_id) #(0 - NWU,  1 - ENU,  2 - NED)
+
 - get gain
   > getGain()
