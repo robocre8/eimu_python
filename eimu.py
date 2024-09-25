@@ -16,14 +16,14 @@ class EIMU:
         self.ser.write(msg_to_send.encode())   # send a single or multiple byte    
         data = self.ser.readline().decode().strip()
         if time.time()-prev_time > 2.0:
-          raise Exception("Error getting response from arduino nano, wasted much time \n")
+          raise Exception("Error getting response from the microcontroller, wasted much time \n")
       except:
-        raise Exception("Error getting response from arduino nano, wasted much time \n")
+        raise Exception("Error getting response from the microcontroller, wasted much time \n")
     return data
 
   
-  def send(self, cmd_route, val1=0, val2=0, val3=0):
-    cmd_str = cmd_route+","+str(val1)+","+str(val2)+","+str(val3)
+  def send(self, cmd_route, val1=0.0):
+    cmd_str = cmd_route+","+str(val1)
     data = self.send_msg(cmd_str)
     if data == "1":
       return True
@@ -33,7 +33,6 @@ class EIMU:
   
   def get(self, cmd_route):
     data = self.send_msg(cmd_route).split(',')
-    # return float(data[0]), float(data[1]), float(data[2])
     if len(data)==1:
       return float(data[0])
     elif len(data)==2:
@@ -77,10 +76,8 @@ class EIMU:
     return gain
   
   def getRefFrame(self):
-    frame_id = int(self.get("/frame-id"))
-    if frame_id == 0:
-      return "NWU"
-    elif frame_id == 1:
-      return "ENU"
-    elif frame_id == 2:
-      return "NED"
+    ref_frame_id = int(self.get("/frame-id"))
+    return ref_frame_id
+  
+  def setRefFrame(self, ref_frame_id):
+    return self.send("/frame-id", ref_frame_id)
