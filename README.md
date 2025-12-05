@@ -1,6 +1,6 @@
 
 ## Easy IMU Python Library
-This library helps communicate with the already setup **`Easy IMU Module`** (i.e **`MPU9250 EIMU Module`**) in your PC or microcomputer-based python projects, with the [eimu_setup_application](https://github.com/samuko-things-company/eimu_setup_application).
+This library helps communicate with the already setup **`Easy IMU Module`** in your PC or microcomputer-based python projects, with the [eimu_setup_application](https://github.com/samuko-things-company/eimu_setup_application).
 
 > you can use it in your microcomputer robotics project (e.g Raspberry Pi, PC, etc.)
 
@@ -32,34 +32,31 @@ A simple way to get started is simply to try out and follow the example code
 ## Basic Library functions and usage
 
 - connect to sic_driver shield module
-  > SIC("port_name or port_path")
+  > EIMU("port_name or port_path")
 
-- get filtered Roll, Pitch and Yaw readings
-  > getRPY()
+- clear IMU data buffer (ret True or False)
+  > clearDataBuffer
+
+- get all imu readings - roll, pitch, yaw, ax, ay, az, gx, gy, gz
+  > readImuData()
 
 - get quaternions qw, qx, qy, qz
-  > getQuat()
+  > readQuat()
 
-- get Roll(gx), Pitch(gy) and Yaw(gz) rates value
-  > getGyro()
+- get reference frame 
+  > getWorldFrameId()  #(0 - NWU,  1 - ENU,  2 - NED)
 
-- get linear acceleration values ax, ay, az
-  > getAcc()
+- change reference frame (ret True or False)
+  > setWorldFrameId(frame_id) #(0 - NWU,  1 - ENU,  2 - NED)
 
-- get rpy variances
-  > getRPYvariance()
+- get the madgwick filter gain
+  > getFilterGain()
 
-- get rpy rate variances
-  > getGyroVariance()
+- get rpy variances- get Roll, Pitch and Yaw variance value
+  > readRPYVariance()
 
-- get acceleration variances
-  > getAccVariance()
+- get gyro rate variances - gx, gy, gz
+  > readGyroVariance()
 
-- get reference frame
-  > getRefFrame()
-
-- change reference frame
-  > setRefFrame(ref_frame_id) #(0 - NWU,  1 - ENU,  2 - NED)
-
-- get gain
-  > getGain()
+- get acceleration variances - ax, ay, az
+  > readAccVariance()
