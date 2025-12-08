@@ -21,6 +21,8 @@ READ_QUAT_RPY = 0x22
 READ_ACC_GYRO = 0x23
 CLEAR_DATA_BUFFER = 0x27
 READ_IMU_DATA = 0x28
+READ_LIN_ACC_RAW = 0x2B
+READ_LIN_ACC = 0x2C
 
 
 
@@ -210,5 +212,13 @@ class EIMU:
     def readImuData(self):
         r, p, y, ax, ay, az, gx, gy, gz = self.read_data9(READ_IMU_DATA)
         return round(r, 6), round(p, 6), round(y, 6), round(ax, 6), round(ay, 6), round(az, 6), round(gx, 6), round(gy, 6), round(gz, 6)
+    
+    def readLinearAccRaw(self):
+        ax, ay, az = self.read_data3(READ_LIN_ACC_RAW)
+        return round(ax, 6), round(ay, 6), round(az, 6)
+    
+    def readLinearAcc(self):
+        ax, ay, az = self.read_data3(READ_LIN_ACC)
+        return round(ax, 6), round(ay, 6), round(az, 6)
 
     #---------------------------------------------------------------------
