@@ -27,36 +27,35 @@ A simple way to get started is simply to try out and follow the example code
 
 - A simple way to get started is simply to try out and follow the example `read_rpy.py` code.
 
-- You can copy the **`eimu.py`** file into your python robotics project, import the library as shown in the example **`read_rpy.py`** code, add it to your code, and start using it.
+- You can copy the **`eimu.py`** file into your python robotics project, import the library as shown in the example **`read_imu.py`** code, add it to your code, and start using it.
+
 
 ## Basic Library functions and usage
 
-- connect to sic_driver shield module
-  > EIMU("port_name or port_path")
+- connect to smc_driver shield module
+  > eimu = EIMU()
+  >
+  > eimu.connect("port_name or port_path")
+  >
+  > eimu.clearDataBuffer() # returns bool -> success
 
-- clear IMU data buffer (ret True or False)
-  > clearDataBuffer
+- set imu reference frame -> NWU (0), ENU (1), NED (2) 
+  > eimu.setWorldFrameId(frame_id)
 
-- get all imu readings - roll, pitch, yaw, ax, ay, az, gx, gy, gz
-  > readImuData()
+- get imu reference frame -> NWU (0), ENU (1), NED (2) 
+  > eimu.getWorldFrameId() # returns tuple -> (success, frame_id): bool, int
 
-- get quaternions qw, qx, qy, qz
-  > readQuat()
+- read all IMU data (orientation - RPY, linear acceleration, angular velocity)
+  > eimu.readImuData() # returns tuple -> (success, r, p, y, ax, ay, az, gx, gy, gz): bool, float, float, float, float, float, float, float, float, float
 
-- get reference frame 
-  > getWorldFrameId()  #(0 - NWU,  1 - ENU,  2 - NED)
+- read Oreintation - Quaterninos
+  > eimu.readQuat() # returns tuple -> (success, qw, qx, qy, qz): bool, float, float, float, float
 
-- change reference frame (ret True or False)
-  > setWorldFrameId(frame_id) #(0 - NWU,  1 - ENU,  2 - NED)
+- read Oreintation - RPY
+  > eimu.readRPY() # returns tuple -> (success, r, p, y): bool, float, float, float
 
-- get the madgwick filter gain
-  > getFilterGain()
+- read Linear Acceleration
+  > eimu.readLinearAcc() # returns tuple -> (success, ax, ay, az): bool, float, float, float
 
-- get rpy variances- get Roll, Pitch and Yaw variance value
-  > readRPYVariance()
-
-- get gyro rate variances - gx, gy, gz
-  > readGyroVariance()
-
-- get acceleration variances - ax, ay, az
-  > readAccVariance()
+- read Gyro (Angular velocity)
+  > eimu.readGyro() # returns tuple -> (success, gx, gy, gz): bool, float, float, float
