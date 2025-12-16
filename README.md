@@ -45,6 +45,12 @@ A simple way to get started is simply to try out and follow the example code
 - get imu reference frame -> NWU (0), ENU (1), NED (2) 
   > eimu.getWorldFrameId() # returns tuple -> (success, frame_id): bool, int
 
+- adjust filter gain
+  > eimu.setFilterGain(gain)
+
+- read filter gain
+  > eimu.getFilterGain() # returns tuple -> (success, gain): bool, float
+
 - read all IMU data (orientation - RPY, linear acceleration, angular velocity)
   > eimu.readImuData() # returns tuple -> (success, r, p, y, ax, ay, az, gx, gy, gz): bool, float, float, float, float, float, float, float, float, float
 

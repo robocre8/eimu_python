@@ -14,6 +14,7 @@ READ_ACC_VAR = 0x09
 READ_GYRO = 0x0B
 READ_GYRO_VAR = 0x0F
 READ_MAG = 0x11
+SET_FILTER_GAIN = 0x1D
 GET_FILTER_GAIN = 0x1E
 SET_FRAME_ID = 0x1F
 GET_FRAME_ID = 0x20
@@ -193,6 +194,9 @@ class EIMU:
         success, frame_id = self.read_data1(GET_FRAME_ID)
         return success, int(frame_id)
     
+    def setFilterGain(self, gain):
+        self.write_data1(SET_FILTER_GAIN, gain)
+
     def getFilterGain(self):
         success, gain = self.read_data1(GET_FILTER_GAIN)
         return success, round(gain, 3)
