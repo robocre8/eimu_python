@@ -63,14 +63,14 @@ class EIMU:
 
     #------------------------------------------------------------------------
     def send(self, cmd, arg1=0.0, arg2=0.0, arg3=0.0):
-        send_str = str(float(cmd))+" "+str(float(arg1))+" "+str(float(arg2))+" "+str(float(arg3))+"\r"
+        send_str = str(round(float(cmd),6))+" "+str(round(float(arg1),6))+" "+str(round(float(arg2),6))+" "+str(round(float(arg3),6))+"\r"
         self.ser.write(send_str.encode())
 
     def recv(self, cmd, arg1=0):
         try:
             self.send(cmd, arg1)
             data = self.ser.readline().decode().strip().split(' ')
-            return True, float(data[0]), float(data[1]), float(data[2])
+            return True, round(float(data[0]),6), round(float(data[1]),6), round(float(data[2]),6)
         except:
             # self.ser.reset_input_buffer()
             # self.ser.reset_output_buffer()
@@ -105,26 +105,26 @@ class EIMU:
     
     def readRPY(self):
         success, r, p, y = self.recv(READ_RPY)
-        return success, round(r, 6), round(p, 6), round(y, 6)
+        return success, r, p, y
     
     def readRPYVariance(self):
         success, r, p, y = self.recv(READ_RPY_VAR)
-        return success, round(r, 6), round(p, 6), round(y, 6)
+        return success, r, p, y
     
     def readLinearAcc(self):
         success, ax, ay, az = self.recv(READ_LIN_ACC)
-        return success, round(ax, 6), round(ay, 6), round(az, 6)
+        return success, ax, ay, az
     
     def readAccVariance(self):
         success, ax, ay, az = self.recv(READ_ACC_VAR)
-        return success, round(ax, 6), round(ay, 6), round(az, 6)
+        return success, ax, ay, az
     
     def readGyro(self):
         success, gx, gy, gz = self.recv(READ_GYRO)
-        return success, round(gx, 6), round(gy, 6), round(gz, 6)
+        return success, gx, gy, gz
     
     def readGyroVariance(self):
         success, gx, gy, gz = self.recv(READ_GYRO_VAR)
-        return success, round(gx, 6), round(gy, 6), round(gz, 6)
+        return success, gx, gy, gz
     
     #---------------------------------------------------------------------
