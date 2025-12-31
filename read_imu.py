@@ -5,13 +5,17 @@ port = '/dev/ttyACM0'
 eimu = EIMU()
 
 def main():
+  r=0.0; p=0.0; y=0.0
+  ax=0.0; ay=0.0; az=0.0
+  gx=0.0; gy=0.0; gz=0.0
+
   eimu.connect(port)
 
   for i in range(4):
     time.sleep(1.0)
     print(i+1, " sec")
 
-  success = eimu.clearDataBuffer()
+  # success = eimu.clearDataBuffer()
 
   # change the reference frame to ENU frame (0 - NWU,  1 - ENU,  2 - NED)
   eimu.setWorldFrameId(1)
@@ -33,15 +37,22 @@ def main():
 
   while True:
     if time.time() - prevTime > sampleTime:
-      success, r, p, y, ax, ay, az, gx, gy, gz = eimu.readImuData()
-
+      success, valx, valy, valz = eimu.readRPY()
       if success:
-        print(f"r: {r}\tp: {p}\ty: {y}")
-        print(f"ax: {ax}\tay: {ay}\taz: {az}")
-        print(f"gx: {gx}\tgy: {gy}\tgz: {gz}")
-        print()
-      else:
-        print("Error reading IMU data")
+        r=valx; p=valy; y=valz
+
+      success, valx, valy, valz = eimu.readLinearAcc()
+      if success:
+        ax=valx; ay=valy; az=valz
+
+      success, valx, valy, valz = eimu.readGyro()
+      if success:
+        gx=valx; gy=valy; gz=valz
+
+      print(f"r: {r}\tp: {p}\ty: {y}")
+      print(f"ax: {ax}\tay: {ay}\taz: {az}")
+      print(f"gx: {gx}\tgy: {gy}\tgz: {gz}")
+      print()
       prevTime = time.time()
 
 if __name__ == "__main__":
