@@ -51,12 +51,6 @@ A simple way to get started is simply to try out and follow the example code
 - read filter gain
   > eimu.getFilterGain() # returns tuple -> (success, gain): bool, float
 
-- read all IMU data (orientation - RPY, linear acceleration, angular velocity)
-  > eimu.readImuData() # returns tuple -> (success, r, p, y, ax, ay, az, gx, gy, gz): bool, float, float, float, float, float, float, float, float, float
-
-- read Oreintation - Quaterninos
-  > eimu.readQuat() # returns tuple -> (success, qw, qx, qy, qz): bool, float, float, float, float
-
 - read Oreintation - RPY
   > eimu.readRPY() # returns tuple -> (success, r, p, y): bool, float, float, float
 

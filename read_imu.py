@@ -11,7 +11,7 @@ def main():
     time.sleep(1.0)
     print(i+1, " sec")
 
-  success = eimu.clearDataBuffer()
+  # success = eimu.clearDataBuffer()
 
   # change the reference frame to ENU frame (0 - NWU,  1 - ENU,  2 - NED)
   eimu.setWorldFrameId(1)
@@ -33,7 +33,9 @@ def main():
 
   while True:
     if time.time() - prevTime > sampleTime:
-      success, r, p, y, ax, ay, az, gx, gy, gz = eimu.readImuData()
+      success, r, p, y = eimu.readRPY()
+      success, ax, ay, az = eimu.readLinearAcc()
+      success, gx, gy, gz = eimu.readGyro()
 
       if success:
         print(f"r: {r}\tp: {p}\ty: {y}")
