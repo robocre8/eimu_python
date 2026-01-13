@@ -5,7 +5,12 @@ port = '/dev/ttyACM0'
 eimu = EIMU()
 
 def main():
-  eimu.connect(port)
+  # 50Hz comm setup
+  serial_port = '/dev/ttyACM0'
+  serial_baudrate = 115200
+  serial_timeout = 0.018 #value < 0.02 (for 50Hz comm)
+
+  eimu.connect(serial_port, serial_baudrate, serial_timeout)
 
   for i in range(4):
     time.sleep(1.0)
@@ -29,7 +34,7 @@ def main():
     print("Could not get world frame ID")
 
   prevTime = time.time()
-  sampleTime = 0.01
+  sampleTime = 0.02
 
   while True:
     if time.time() - prevTime > sampleTime:
