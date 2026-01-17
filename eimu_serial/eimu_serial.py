@@ -5,6 +5,7 @@ import struct
 #     """Custom exception for for EIMU Comm failure"""
 #     pass
 
+#------------------------------------------------
 START_BYTE = 0xBB
 READ_QUAT = 0x01
 READ_RPY = 0x02
@@ -49,8 +50,7 @@ READ_LIN_ACC_RAW = 0x2B
 READ_LIN_ACC = 0x2C
 #---------------------------------------------
 
-
-class EIMU:
+class EIMUSerialClient:
     def __init__(self):
         pass
 
@@ -62,6 +62,7 @@ class EIMU:
             self.ser.close()
     
     #------------------------------------------------------------------------
+
     def send_packet_without_payload(self, cmd):
         length = 0
         packet = bytearray([START_BYTE, cmd, length])
