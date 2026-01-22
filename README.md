@@ -44,7 +44,7 @@ Python serial interface for the Easy IMU (EIMU).
 
 ## Basic Library functions and usage
 
-- connect to smc_driver shield module
+- connect to the EIMU module
   > imu = EIMUSerialClient()
   >
   > imu.connect("port_name or port_path")
