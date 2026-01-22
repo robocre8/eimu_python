@@ -1,5 +1,5 @@
 
-## Easy IMU Python Library
+## Easy IMU Python Serial Client Library
 This library helps communicate with the already setup **`Easy IMU Module`** in your PC or microcomputer-based python projects, with the [eimu_setup_application](https://github.com/samuko-things-company/eimu_setup_application).
 
 > you can use it in your microcomputer robotics project (e.g Raspberry Pi, PC, etc.)
@@ -19,7 +19,7 @@ A simple way to get started is simply to try out and follow the example code
 > [!NOTE]  
 > you can use this command if you want to clone the repo:
 > 
->  ```git clone https://github.com/samuko-things-company/eimu_python.git```
+>  ```git clone https://github.com/robocre8/eimu_serial_py.git```
 
 - Ensure you have the **Easy IMU Module** is already calibrated.
 
@@ -27,41 +27,42 @@ A simple way to get started is simply to try out and follow the example code
 
 - A simple way to get started is simply to try out and follow the example `read_rpy.py` code.
 
-- You can copy the **`eimu.py`** file into your python robotics project, import the library as shown in the example **`read_imu.py`** code, add it to your code, and start using it.
+- You can copy the **`eimu_serial.py`** file into your python robotics project, import the library as shown in the example **`read_imu.py`** code, add it to your code, and start using it.
 
 
 ## Basic Library functions and usage
 
-- connect to smc_driver shield module
-  > eimu = EIMU()
+- connect to EIMU module
+  > imu = EIMUSerialClient()
   >
-  > eimu.connect("port_name or port_path")
-  >
-  > eimu.clearDataBuffer() # returns bool -> success
+  > imu.connect("port_name or port_path")
+
+- clear imu, filter, e.t.c data buffer on the EIMU module
+  > imu.clearDataBuffer() # returns bool -> success
 
 - set imu reference frame -> NWU (0), ENU (1), NED (2) 
-  > eimu.setWorldFrameId(frame_id)
+  > imu.setWorldFrameId(frame_id)
 
 - get imu reference frame -> NWU (0), ENU (1), NED (2) 
-  > eimu.getWorldFrameId() # returns tuple -> (success, frame_id): bool, int
+  > imu.getWorldFrameId() # returns tuple -> (success, frame_id): bool, int
 
 - adjust filter gain
-  > eimu.setFilterGain(gain)
+  > imu.setFilterGain(gain)
 
 - read filter gain
-  > eimu.getFilterGain() # returns tuple -> (success, gain): bool, float
+  > imu.getFilterGain() # returns tuple -> (success, gain): bool, float
 
 - read all IMU data (orientation - RPY, linear acceleration, angular velocity)
-  > eimu.readImuData() # returns tuple -> (success, r, p, y, ax, ay, az, gx, gy, gz): bool, float, float, float, float, float, float, float, float, float
+  > imu.readImuData() # returns tuple -> (success, r, p, y, ax, ay, az, gx, gy, gz): bool, float, float, float, float, float, float, float, float, float
 
 - read Oreintation - Quaterninos
-  > eimu.readQuat() # returns tuple -> (success, qw, qx, qy, qz): bool, float, float, float, float
+  > imu.readQuat() # returns tuple -> (success, qw, qx, qy, qz): bool, float, float, float, float
 
 - read Oreintation - RPY
-  > eimu.readRPY() # returns tuple -> (success, r, p, y): bool, float, float, float
+  > imu.readRPY() # returns tuple -> (success, r, p, y): bool, float, float, float
 
 - read Linear Acceleration
-  > eimu.readLinearAcc() # returns tuple -> (success, ax, ay, az): bool, float, float, float
+  > imu.readLinearAcc() # returns tuple -> (success, ax, ay, az): bool, float, float, float
 
 - read Gyro (Angular velocity)
-  > eimu.readGyro() # returns tuple -> (success, gx, gy, gz): bool, float, float, float
+  > imu.readGyro() # returns tuple -> (success, gx, gy, gz): bool, float, float, float

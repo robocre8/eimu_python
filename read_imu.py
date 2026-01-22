@@ -1,8 +1,11 @@
+from eimu_serial import EIMUSerialClient
 import time
-from eimu import EIMU
+from math import pi
 
-port = '/dev/ttyACM0'
-eimu = EIMU()
+toRad = 2 * pi / 360
+toDeg = 1 / toRad
+
+imu = EIMUSerialClient()
 
 def main():
   # 50Hz comm setup
@@ -10,19 +13,19 @@ def main():
   serial_baudrate = 115200
   serial_timeout = 0.018 #value < 0.02 (for 50Hz comm)
 
-  eimu.connect(serial_port, serial_baudrate, serial_timeout)
+  imu.connect(serial_port, serial_baudrate, serial_timeout)
 
   for i in range(4):
     time.sleep(1.0)
     print(i+1, " sec")
 
-  success = eimu.clearDataBuffer()
+  success = imu.clearDataBuffer()
 
   # change the reference frame to ENU frame (0 - NWU,  1 - ENU,  2 - NED)
-  eimu.setWorldFrameId(1)
+  imu.setWorldFrameId(1)
 
   # check the reference frame the eimu is working in (0 - NWU,  1 - ENU,  2 - NED)
-  success, ref_frame_id = eimu.getWorldFrameId()
+  success, ref_frame_id = imu.getWorldFrameId()
   if success:
     if ref_frame_id == 0:
       print("Reference Frame is North-West-Up (NWU)")
@@ -34,14 +37,14 @@ def main():
     print("Could not get world frame ID")
 
   prevTime = time.time()
-  sampleTime = 0.02
+  sampleTime = 0.02 #( 50Hz comm)
 
   while True:
     if time.time() - prevTime > sampleTime:
-      success, r, p, y, ax, ay, az, gx, gy, gz = eimu.readImuData()
+      success, r, p, y, ax, ay, az, gx, gy, gz = imu.readImuData()
 
       if success:
-        print(f"r: {r}\tp: {p}\ty: {y}")
+        print(f"r: {round(r*toDeg,2)}\tp: {round(p*toDeg,2)}\ty: {round(y*toDeg,2)}")
         print(f"ax: {ax}\tay: {ay}\taz: {az}")
         print(f"gx: {gx}\tgy: {gy}\tgz: {gz}")
         print()
@@ -51,4 +54,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-  
